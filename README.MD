@@ -1,6 +1,7 @@
 This is an example of setting development environment using Docker compose.
 
 Services:
+
     - Ruby
     - Postgres
     - Redis
