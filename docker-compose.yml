@@ -1,0 +1,44 @@
+db:
+  container_name: my_db_container
+  image: postgres:latest
+  ports:
+    - 5432:5432
+  environment:
+    POSTGRES_DB: my_app
+    POSTGRES_PASSWORD: 123456
+
+redis:
+  container_name: my_redis_container
+  image: redis:latest
+  ports:
+    - 6379:6379
+
+memcached:
+  container_name: my_memcached_container
+  image: memcached:latest
+  ports:
+    - 11211:11211
+
+elasticsearch:
+  container_name: my_elasticsearch_container
+  image: docker.elastic.co/elasticsearch/elasticsearch:5.6.3
+  ports:
+    - 9200:9200
+    - 9300:9300
+
+app:
+  container_name: my_app_container
+  build: .
+  dockerfile: Dockerfile
+  command: bash
+  ports:
+    - 3000:3000
+  volumes:
+    - ".:/webapp"
+  env_file:
+    - ./.env.docker_compose
+  links:
+    - db
+    - redis
+    - memcached
+    - elasticsearch
